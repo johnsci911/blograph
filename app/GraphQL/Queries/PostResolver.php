@@ -12,6 +12,6 @@ final class PostResolver
      */
     public function __invoke($_, array $args)
     {
-		return Post::where('id', $args['id'])->first();
+        return Post::where('id', $args['id'])->first();
     }
 }

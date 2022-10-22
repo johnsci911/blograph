@@ -12,10 +12,10 @@ final class CreatePostResolver
      */
     public function __invoke($_, array $args)
     {
-		return Post::create([
-			'user_id' => $args['user_id'],
-			'title' => $args['title'],
-			'body' => $args['body'],
-		]);
+        return Post::create([
+            'user_id' => $args['user_id'],
+            'title' => $args['title'],
+            'body' => $args['body'],
+        ]);
     }
 }

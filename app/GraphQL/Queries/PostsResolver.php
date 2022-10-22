@@ -12,6 +12,6 @@ final class PostsResolver
      */
     public function __invoke($_, array $args)
     {
-		return Post::latest()->get();
+        return Post::latest()->get();
     }
 }
