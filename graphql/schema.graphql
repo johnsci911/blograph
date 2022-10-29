@@ -3,7 +3,7 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 
 "Indicates what fields are available at the top level of a query operation."
 type Query {
-    users: [User!]! @paginate(defaultCount: 10) @guard
+    users: [User!]! @all @guard @can(ability: "viewAny")
     user(id: ID @eq): User @find
     posts: [Post!]! @paginate(defaultCount: 10) @orderBy(column: "updated_at", direction: DESC)
     postsResolver: [Post!]! @field(resolver: "App\\GraphQL\\Queries\\PostsResolver")
@@ -22,9 +22,9 @@ type Mutation {
         id: ID!
         title: String! @rules(apply: ["required", "min: 3"])
         body: String! @rules(apply: ["required", "min: 3"])
-    ): Post @update
+    ): Post @update @guard @can(ability: "update", find: "id")
 
-    deletePost(id: ID!): Post @delete
+    deletePost(id: ID!): Post @delete @guard @can(ability: "delete", find: "id")
 
     loginTest(
         email: String!
@@ -37,13 +37,12 @@ type AccessTokenTest {
     token: String!
 }
 
-"Account of a person who utilizes this application."
 type User {
-    "Unique primary key."
     id: ID!
     name: String!
     email: String!
     posts: [Post!]! @hasMany
+    is_admin: Boolean! @method(name: "isAdmin")
     created_at: DateTime!
     updated_at: DateTime!
 }
